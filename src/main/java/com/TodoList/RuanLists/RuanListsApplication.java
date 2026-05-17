@@ -1,4 +1,4 @@
-package com.TudoList.RuanLists;
+package com.TodoList.RuanLists;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
