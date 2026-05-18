@@ -1,2 +1,7 @@
-package com.TodoList.RuanLists.domain.model.tasks;public class TaskStatus {
+package com.TodoList.RuanLists.domain.model.tasks;
+
+public enum TaskStatus {
+    PENDING,
+    IN_PROGRESS,
+    DONE,
 }
