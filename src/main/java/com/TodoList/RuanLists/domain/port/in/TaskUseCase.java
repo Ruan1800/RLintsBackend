@@ -1,19 +1,19 @@
 package com.TodoList.RuanLists.domain.port.in;
 
 import com.TodoList.RuanLists.domain.model.tasks.TaskStatus;
-import com.TodoList.RuanLists.domain.model.tasks.Tasks;
+import com.TodoList.RuanLists.domain.model.tasks.Task;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TaskUseCase {
 
-  Tasks create(String title, String description);
-  Tasks findById(UUID id);
-  List<Tasks> findAll();
-  List<Tasks> findByStatus(String status);
-  List<Tasks> search(String query);
-  Tasks update(UUID id, String title, String description);
-  Tasks updateStatus(UUID id, TaskStatus status);
+  Task create(String title, String description);
+  Task findById(UUID id);
+  List<Task> findAll();
+  List<Task> findByStatus(TaskStatus status);
+  List<Task> search(String query);
+  Task update(UUID id, String title, String description);
+  Task updateStatus(UUID id, TaskStatus status);
   void delete(UUID id);
 }

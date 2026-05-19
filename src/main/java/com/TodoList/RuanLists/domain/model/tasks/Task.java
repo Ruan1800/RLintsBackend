@@ -23,7 +23,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class Tasks {
+public class Task {
 
       @Id
       @GeneratedValue(strategy = GenerationType.UUID)
@@ -37,8 +37,8 @@ public class Tasks {
       private LocalDateTime createdAt;
       private LocalDateTime updatedAt;
       
-      public static Tasks create(String title, String description) {
-            return Tasks.builder()
+      public static Task create(String title, String description) {
+            return Task.builder()
                     .id(UUID.randomUUID())
                     .title(title)
                     .description(description)
