@@ -39,7 +39,6 @@ public class Task {
       
       public static Task create(String title, String description) {
             return Task.builder()
-                    .id(UUID.randomUUID())
                     .title(title)
                     .description(description)
                     .status(TaskStatus.PENDING)

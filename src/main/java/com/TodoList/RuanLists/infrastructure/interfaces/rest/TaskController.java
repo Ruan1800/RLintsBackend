@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,24 +56,24 @@ public class TaskController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TaskResponceDTO> findById(@RequestParam UUID id) {
+  public ResponseEntity<TaskResponceDTO> findById(@PathVariable UUID id) {
     return ResponseEntity.ok(TaskResponceDTO.from(taskUseCase.findById(id)));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<TaskResponceDTO> update(@RequestParam UUID id, @Valid @RequestBody TaskRequestDTO requestDTO) {
+  public ResponseEntity<TaskResponceDTO> update(@PathVariable UUID id, @Valid @RequestBody TaskRequestDTO requestDTO) {
     TaskResponceDTO responceDTO = TaskResponceDTO.from(taskUseCase.update(id, requestDTO.getTitle(), requestDTO.getDescription()));
     return ResponseEntity.ok(responceDTO);
   }
 
   @PatchMapping("/{id}/status")
-  public ResponseEntity<TaskResponceDTO> updateStatus(@RequestParam UUID id, @RequestParam TaskStatus status) {
+  public ResponseEntity<TaskResponceDTO> updateStatus(@PathVariable UUID id, @RequestParam TaskStatus status) {
     TaskResponceDTO responceDTO = TaskResponceDTO.from(taskUseCase.updateStatus(id, status));
     return ResponseEntity.ok(responceDTO);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@RequestParam UUID id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
     taskUseCase.delete(id);
     return ResponseEntity.noContent().build();
   }
