@@ -1,80 +1,122 @@
 package com.TodoList.RuanLists.infrastructure.interfaces.rest;
 
 import com.TodoList.RuanLists.application.dto.TaskRequestDTO;
-import com.TodoList.RuanLists.application.dto.TaskResponceDTO;
-import com.TodoList.RuanLists.domain.model.tasks.TaskStatus;
+import com.TodoList.RuanLists.application.dto.TaskResponseDTO;
+import com.TodoList.RuanLists.domain.model.TaskStatus;
 import com.TodoList.RuanLists.domain.port.in.TaskUseCase;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks")
-@RequiredArgsConstructor
 public class TaskController {
 
   private final TaskUseCase taskUseCase;
 
+  public TaskController(TaskUseCase taskUseCase) {
+    this.taskUseCase = taskUseCase;
+  }
 
   @PostMapping
-  public ResponseEntity<TaskResponceDTO> create(@Valid @RequestBody TaskRequestDTO requestDTO) {
-    TaskResponceDTO responceDTO = TaskResponceDTO.from(taskUseCase.create(requestDTO.getTitle(), requestDTO.getDescription()));
-    return ResponseEntity.status(HttpStatus.CREATED).body(responceDTO);
+  public ResponseEntity<TaskResponseDTO> create(
+    @Valid @RequestBody TaskRequestDTO requestDTO
+  ) {
+
+    TaskResponseDTO responseDTO = TaskResponseDTO.from(
+      taskUseCase.create(
+        requestDTO.getTitle(),
+        requestDTO.getDescription()
+      )
+    );
+
+    return ResponseEntity
+      .status(HttpStatus.CREATED)
+      .body(responseDTO);
   }
 
   @GetMapping
-  public ResponseEntity<List<TaskResponceDTO>> findAll(
+  public ResponseEntity<List<TaskResponseDTO>> findAll(
     @RequestParam(required = false) TaskStatus status,
-    @RequestParam(required = false) String search) {
-    List<TaskResponceDTO> responceDTOs;
+    @RequestParam(required = false) String search
+  ) {
+
+    List<TaskResponseDTO> responseDTOs;
 
     if (status != null) {
-      responceDTOs = taskUseCase.findByStatus(status).stream()
-        .map(TaskResponceDTO::from).toList();
+
+      responseDTOs = taskUseCase.findByStatus(status)
+        .stream()
+        .map(TaskResponseDTO::from)
+        .toList();
+
     } else if (search != null) {
-      responceDTOs = taskUseCase.search(search).stream()
-        .map(TaskResponceDTO::from).toList();
+
+      responseDTOs = taskUseCase.search(search)
+        .stream()
+        .map(TaskResponseDTO::from)
+        .toList();
+
     } else {
-      responceDTOs = taskUseCase.findAll().stream()
-        .map(TaskResponceDTO::from).toList();
+
+      responseDTOs = taskUseCase.findAll()
+        .stream()
+        .map(TaskResponseDTO::from)
+        .toList();
     }
-    return ResponseEntity.ok(responceDTOs);
+
+    return ResponseEntity.ok(responseDTOs);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TaskResponceDTO> findById(@PathVariable UUID id) {
-    return ResponseEntity.ok(TaskResponceDTO.from(taskUseCase.findById(id)));
+  public ResponseEntity<TaskResponseDTO> findById(
+    @PathVariable UUID id
+  ) {
+
+    return ResponseEntity.ok(
+      TaskResponseDTO.from(taskUseCase.findById(id))
+    );
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<TaskResponceDTO> update(@PathVariable UUID id, @Valid @RequestBody TaskRequestDTO requestDTO) {
-    TaskResponceDTO responceDTO = TaskResponceDTO.from(taskUseCase.update(id, requestDTO.getTitle(), requestDTO.getDescription()));
-    return ResponseEntity.ok(responceDTO);
+  public ResponseEntity<TaskResponseDTO> update(
+    @PathVariable UUID id,
+    @Valid @RequestBody TaskRequestDTO requestDTO
+  ) {
+
+    TaskResponseDTO responseDTO = TaskResponseDTO.from(
+      taskUseCase.update(
+        id,
+        requestDTO.getTitle(),
+        requestDTO.getDescription()
+      )
+    );
+
+    return ResponseEntity.ok(responseDTO);
   }
 
   @PatchMapping("/{id}/status")
-  public ResponseEntity<TaskResponceDTO> updateStatus(@PathVariable UUID id, @RequestParam TaskStatus status) {
-    TaskResponceDTO responceDTO = TaskResponceDTO.from(taskUseCase.updateStatus(id, status));
-    return ResponseEntity.ok(responceDTO);
+  public ResponseEntity<TaskResponseDTO> updateStatus(
+    @PathVariable UUID id,
+    @RequestParam TaskStatus status
+  ) {
+
+    TaskResponseDTO responseDTO = TaskResponseDTO.from(
+      taskUseCase.updateStatus(id, status)
+    );
+
+    return ResponseEntity.ok(responseDTO);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable UUID id) {
+
     taskUseCase.delete(id);
+
     return ResponseEntity.noContent().build();
   }
 }

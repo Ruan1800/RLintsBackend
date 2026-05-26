@@ -1,8 +1,6 @@
 package com.TodoList.RuanLists.domain.port.out;
-
-import com.TodoList.RuanLists.domain.model.tasks.TaskStatus;
-import com.TodoList.RuanLists.domain.model.tasks.Task;
-
+import com.TodoList.RuanLists.domain.model.TaskStatus;
+import com.TodoList.RuanLists.domain.model.Task;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

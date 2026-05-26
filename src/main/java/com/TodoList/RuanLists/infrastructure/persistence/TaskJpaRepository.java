@@ -1,7 +1,7 @@
 package com.TodoList.RuanLists.infrastructure.persistence;
 
-import com.TodoList.RuanLists.domain.model.tasks.TaskStatus;
-import com.TodoList.RuanLists.domain.model.tasks.Task;
+import com.TodoList.RuanLists.domain.model.TaskStatus;
+import com.TodoList.RuanLists.domain.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

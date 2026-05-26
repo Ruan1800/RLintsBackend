@@ -1,4 +1,4 @@
-package com.TodoList.RuanLists.domain.model.tasks;
+package com.TodoList.RuanLists.domain.model;
 
 public enum TaskStatus {
     PENDING,

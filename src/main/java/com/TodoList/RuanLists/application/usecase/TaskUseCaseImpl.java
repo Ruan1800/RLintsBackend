@@ -1,21 +1,23 @@
 package com.TodoList.RuanLists.application.usecase;
 
 import com.TodoList.RuanLists.domain.exception.TaskNotFoundException;
-import com.TodoList.RuanLists.domain.model.tasks.TaskStatus;
-import com.TodoList.RuanLists.domain.model.tasks.Task;
+import com.TodoList.RuanLists.domain.model.Task;
+import com.TodoList.RuanLists.domain.model.TaskStatus;
 import com.TodoList.RuanLists.domain.port.in.TaskUseCase;
 import com.TodoList.RuanLists.domain.port.out.TaskRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class TaskUseCaseImpl implements TaskUseCase {
 
   private final TaskRepository taskRepository;
+
+  public TaskUseCaseImpl(TaskRepository taskRepository) {
+    this.taskRepository = taskRepository;
+  }
 
   @Override
   public Task create(String title, String description) {
@@ -63,4 +65,4 @@ public class TaskUseCaseImpl implements TaskUseCase {
     findById(id);
     taskRepository.deleteById(id);
   }
-} 
+}
